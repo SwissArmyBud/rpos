@@ -51,10 +51,6 @@ gulp.task('copy-release-config', function () {
         .pipe(rename("rposConfig.json"))
         .pipe(gulp.dest(releaseDir));
 });
-gulp.task('copy-release-bin', function () {
-    return gulp.src('bin/*')
-        .pipe(gulp.dest(releaseDir + '/bin'));
-});
 gulp.task('copy-release-modules', function () {
     return gulp.src(['node_modules/**/*', '!node_modules/gulp*/**', '!node_modules/gulp**'])
         .pipe(gulp.dest(releaseDir + '/node_modules'));
