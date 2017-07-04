@@ -150,7 +150,7 @@ class MediaService extends SoapService {
       attributes: {
         token: "token"
       },
-      Framerate: 25,
+      Framerate: 30,
       Resolution: { Width: 1920, Height: 1280 }
     };
 
