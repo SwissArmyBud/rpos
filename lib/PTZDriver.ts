@@ -30,20 +30,19 @@ class PTZDriver {
   pelcod: any;
   visca: any;
   pan_tilt_hat: any;
-  serialPort: any;
   stream: any;
 
   constructor(config: rposConfig) {
     this.config = config;
     let parent = this;
 
-    // Sanity checks. Do not open serial or socket if using USB Tenx driver
+    // Sanity checks. Do not open socket if using USB Tenx driver
     let PTZOutput = config.PTZOutput;
     if (config.PTZDriver === 'tenx') {
       PTZOutput = 'none';
     }
 
-    // Sanity checks. Do not open serial or socket if using Pan-Tilt HAT
+    // Sanity checks. Do not open socket if using Pan-Tilt HAT
     if (config.PTZDriver === 'pan-tilt-hat') {
       PTZOutput = 'none';
     }
@@ -57,35 +56,6 @@ class PTZDriver {
     if (config.PTZDriver === 'pan-tilt-hat') {
       var PanTiltHAT = require('pan-tilt-hat');
       this.pan_tilt_hat = new PanTiltHAT();
-    }
-
-    if (PTZOutput === 'serial') {
-      var SerialPort = require('serialport');
-      this.serialPort = new SerialPort(config.PTZSerialPort, 
-        {
-        baudRate: config.PTZSerialPortSettings.baudRate,
-        parity:   config.PTZSerialPortSettings.parity,
-        dataBits: config.PTZSerialPortSettings.dataBits,
-        stopBits: config.PTZSerialPortSettings.stopBits,
-        }
-      );
- 
-      this.stream = this.serialPort.on("open", function(err){
-          if (err) {
-            console.log('Error: '+err);
-          return;
-          } else {
-            if (parent.config.PTZDriver === 'pelcod') {
-              var PelcoD = require('node-pelcod');
-              parent.pelcod = new PelcoD(parent.stream);
-              parent.pelcod.setAddress(parent.config.PTZCameraAddress);
-            }
-            if (parent.config.PTZDriver === 'visca') {
-              parent.visca = true;
-            }
-            // Initialise other protocols here
-          }
-      });
     }
 
     if (PTZOutput === 'tcp') {
