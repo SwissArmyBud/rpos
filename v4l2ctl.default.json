@@ -7,7 +7,7 @@
 "red_balance":1000,
 "blue_balance":1000,
 "horizontal_flip":false,
-"vertical_flip":true,
+"vertical_flip":false,
 "power_line_frequency":1,
 "sharpness":0,
 "color_effects":0,
